@@ -1,5 +1,7 @@
 package project.euler.util;
 
+import java.util.Arrays;
+
 public class NumberUtils {
 
     public static String numberInWord(int x) {
@@ -95,6 +97,24 @@ public class NumberUtils {
             default:
                 throw new IllegalArgumentException("Value " + x + " is not supported.");
         }
+    }
+
+    public static Integer[][] parseTo2dIntegerArray(String str) {
+        return Arrays.stream(str.split("\n"))
+                .map(NumberUtils::parseToIntegerArray)
+                .toArray(Integer[][]::new);
+    }
+
+    private static Integer[] parseToIntegerArray(String str) {
+        return Arrays.stream(str.split(" ")).map(Integer::parseInt).toArray(Integer[]::new);
+    }
+
+    public static int max(Integer... numbers) {
+        int max = Integer.MIN_VALUE;
+        for (int val : numbers) {
+            max = Math.max(max, val);
+        }
+        return max;
     }
 
 }
