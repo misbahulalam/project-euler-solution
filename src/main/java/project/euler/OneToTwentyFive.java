@@ -1,6 +1,6 @@
 package project.euler;
 
-import org.apache.commons.lang3.ArrayUtils;
+import project.euler.util.ArrayUtils;
 import project.euler.util.NumberUtils;
 
 import java.math.BigDecimal;
@@ -650,14 +650,6 @@ public class OneToTwentyFive {
         }
     }
 
-    private static long factorial(long x) {
-        if (x == 1) {
-            return 1;
-        } else {
-            return x * factorial(x - 1);
-        }
-    }
-
     private static int sumOfDigits(BigDecimal x) {
         char[] chars = x.toString().toCharArray();
         return Arrays.stream(ArrayUtils.toObject(chars)).mapToInt(Character::getNumericValue).sum();
@@ -750,40 +742,10 @@ public class OneToTwentyFive {
         int[] data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         int c = 1;
         while (c++ < 1_000_000) {
-            updateToNextLexPermutation(data);
+            ArrayUtils.updateToNextLexPermutation(data);
         }
         System.out.println(Arrays.toString(data));
 
-    }
-
-    private static void updateToNextLexPermutation(int[] input) {
-        for (int i = input.length - 2; i >= 0; i--) {
-            for (int j = input.length - 1; j > i; j--) {
-                if (input[j] > input[i]) {
-                    swapPosition(input, i, j);
-                    sortSubArray(input, i + 1);
-                    return;
-                }
-            }
-        }
-    }
-
-    private static void sortSubArray(int[] arr, int startPosition) {
-        if (startPosition == arr.length - 1) return;
-
-        for (int i = startPosition; i <= arr.length - 2; i++) {
-            for (int j = i + 1; j <= arr.length - 1; j++) {
-                if (arr[i] > arr[j]) {
-                    swapPosition(arr, i, j);
-                }
-            }
-        }
-    }
-
-    private static void swapPosition(int[] arr, int p1, int p2) {
-        int tmp = arr[p1];
-        arr[p1] = arr[p2];
-        arr[p2] = tmp;
     }
 
     private static boolean isDescSorted(int[] arr) {

@@ -117,4 +117,23 @@ public class NumberUtils {
         return max;
     }
 
+    public static long factorial(long x) {
+        if (x == 1) {
+            return 1;
+        } else {
+            return x * factorial(x - 1);
+        }
+    }
+
+    public static int[] digits(int number) {
+        int log = (int) Math.log10(number);
+        int[] digits = new int[log + 1];
+        int index = log;
+        while(number > 0) {
+            digits[index--] = number % 10;
+            number /= 10;
+        }
+        return digits;
+    }
+
 }
