@@ -1,7 +1,9 @@
-package project.euler.util;
+package project.euler;
+
+import project.euler.util.NumberUtils;
 
 /**
- * @author <a href="mailto:misbah@cefalo.com">Misbahul Alam Chowdhury</a> on Oct 25, 2017
+ * @author <a href="mailto:misbahulalam@gmail.com">Misbahul Alam Chowdhury</a> on Oct 25, 2017
  * @since 1.0
  */
 public class FiftyOneToSeventyFive {
