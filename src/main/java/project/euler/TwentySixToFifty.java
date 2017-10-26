@@ -1,10 +1,12 @@
 package project.euler;
 
+import org.apache.commons.lang3.math.Fraction;
 import project.euler.util.ArrayUtils;
 import project.euler.util.NumberUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TwentySixToFifty {
 
@@ -16,6 +18,8 @@ public class TwentySixToFifty {
 //        thirty();
 //        thirtyOne();
 //        thirtyTwo();
+//        thirtyThree();
+//        thirtyFour();
     }
 
     private static void twentySix() {
@@ -184,7 +188,7 @@ public class TwentySixToFifty {
         for (int x : possibleValues(digits, 1)) {
             int[] remainingDigits = arrayMinus(digits, NumberUtils.digits(x));
             for (int y : possibleValues(remainingDigits, 4)) {
-                int[] allowedResultDigits= arrayMinus(remainingDigits, NumberUtils.digits(y));
+                int[] allowedResultDigits = arrayMinus(remainingDigits, NumberUtils.digits(y));
                 int product = x * y;
                 if (numberConsistOfDigits(product, allowedResultDigits)) {
 //                    System.out.println(x + " x " + y + " = " + product);
@@ -197,7 +201,7 @@ public class TwentySixToFifty {
         for (int x : possibleValues(digits, 2)) {
             int[] remainingDigits = arrayMinus(digits, NumberUtils.digits(x));
             for (int y : possibleValues(remainingDigits, 3)) {
-                int[] allowedResultDigits= arrayMinus(remainingDigits, NumberUtils.digits(y));
+                int[] allowedResultDigits = arrayMinus(remainingDigits, NumberUtils.digits(y));
                 int product = x * y;
                 if (numberConsistOfDigits(product, allowedResultDigits)) {
 //                    System.out.println(x + " x " + y + " = " + product);
@@ -211,7 +215,7 @@ public class TwentySixToFifty {
     }
 
     private static boolean numberConsistOfDigits(int number, final int[] digits) {
-        if ((int)(Math.log10(number) + 1) != digits.length) return false;
+        if ((int) (Math.log10(number) + 1) != digits.length) return false;
 
         int[] copy = Arrays.copyOf(digits, digits.length);
         Arrays.sort(copy);
@@ -250,6 +254,41 @@ public class TwentySixToFifty {
             }
         }
         return arr;
+    }
+
+    private static void thirtyThree() {
+        int numerator = 1;
+        int denominator = 1;
+
+        for (float c = 1; c <= 9; c++) {
+            for (float i = 1; i < 9; i++) {
+                for (float j = i + 1; j <= 9; j++) {
+                    float r = i / j;
+                    if (r == (i * 10 + c) / (c * 10 + j) || r == (c * 10 + i) / (j * 10 + c)) {
+                        numerator *= i;
+                        denominator *= j;
+                    }
+                }
+            }
+        }
+        Fraction reducedFraction = Fraction.getReducedFraction(numerator, denominator);
+        System.out.println(reducedFraction.getDenominator());
+    }
+
+    private static void thirtyFour() {
+        Map<Integer, Integer> factorials = new HashMap<>(10);
+        for (int i = 0; i <= 9; i++) {
+            factorials.put(i, (int) NumberUtils.factorial(i));
+        }
+
+        //9! * 7 = 2540160, a 7 digit number
+        //9! * 8 = 2903040, also a 7 digit number
+        //So, no need to exceed 7 digit numbers.
+
+        int total = IntStream.range(10, (int) Math.pow(10, 7))
+                .filter(x -> x == Arrays.stream(NumberUtils.digits(x)).map(factorials::get).sum())
+                .sum();
+        System.out.println(total);
     }
 
 }

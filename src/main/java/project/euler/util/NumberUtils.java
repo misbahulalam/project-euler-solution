@@ -118,7 +118,7 @@ public class NumberUtils {
     }
 
     public static long factorial(long x) {
-        if (x == 1) {
+        if (x == 0 || x == 1) {
             return 1;
         } else {
             return x * factorial(x - 1);
