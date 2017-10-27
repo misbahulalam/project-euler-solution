@@ -23,6 +23,7 @@ public class TwentySixToFifty {
 //        thirtySix();
 //        thirtySeven();
 //        thirtyEight();
+//        thirtyNine();
     }
 
     private static void twentySix() {
@@ -317,4 +318,25 @@ public class TwentySixToFifty {
         return products[multiplier - 2];
     }
 
+    private static void thirtyNine() {
+        int maxTriangleCount = 0;
+        int pForMaxTriangleCount = 0;
+
+        for (int p = 3; p <= 1000; p++) {
+            int triangleCount = 0;
+            for (int a = 1; a <= p / 3; a++) {
+                for (int b = Math.max(p / 2 - a, a + 1); b <= p / 2; b++) {
+                    int c = p - a - b;
+                    if (a * a + b * b == c * c) {
+                        triangleCount++;
+                    }
+                }
+            }
+            if (triangleCount > maxTriangleCount) {
+                maxTriangleCount = triangleCount;
+                pForMaxTriangleCount = p;
+            }
+        }
+        System.out.println(pForMaxTriangleCount);
+    }
 }
