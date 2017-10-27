@@ -22,6 +22,7 @@ public class TwentySixToFifty {
 //        thirtyFive();
 //        thirtySix();
 //        thirtySeven();
+//        thirtyEight();
     }
 
     private static void twentySix() {
@@ -280,4 +281,40 @@ public class TwentySixToFifty {
         }
         System.out.println(sum);
     }
+
+    private static void thirtyEight() {
+        int maxPDNumber = Integer.MIN_VALUE;
+        for (int i = 1; i < 100000; i++) {
+            String product = concatenatedProductBelowTenDigits(i);
+            if (isPandigital(product)) {
+                int productInt = Integer.parseInt(product);
+                if (productInt > maxPDNumber) {
+                    maxPDNumber = productInt;
+                }
+            }
+        }
+        System.out.println(maxPDNumber);
+    }
+
+    private static boolean isPandigital(String str) {
+        if (str.length() != 9) return false;
+        char[] chars = str.toCharArray();
+        for (char d : new char[]{'1', '2', '3', '4', '5', '6', '7', '8', '9'}) {
+            if (!ArrayUtils.contains(chars, d)) return false;
+        }
+        return true;
+    }
+
+    private static String concatenatedProductBelowTenDigits(int number) {
+        String[] products = new String[10];
+        int multiplier = 1;
+        products[0] = Integer.toString(number);
+        while (products[multiplier - 1].length() < 10) {
+            int m = multiplier;
+            products[m] = products[m - 1] + number * (m + 1);
+            multiplier++;
+        }
+        return products[multiplier - 2];
+    }
+
 }
