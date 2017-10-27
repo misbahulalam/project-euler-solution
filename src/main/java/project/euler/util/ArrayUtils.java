@@ -45,4 +45,27 @@ public class ArrayUtils extends org.apache.commons.lang3.ArrayUtils {
         return Arrays.stream(toObject(numbers)).collect(Collectors.toSet());
     }
 
+    public static int[] arrayMinus(int[] original, int[] minus) {
+        int nullFlag = Integer.MIN_VALUE;
+        int[] copy = Arrays.copyOf(original, original.length);
+
+        for (int m : minus) {
+            for (int i = 0; i < copy.length; i++) {
+                if (copy[i] == m) {
+                    copy[i] = nullFlag;
+                    break;
+                }
+            }
+        }
+
+        int[] arr = new int[copy.length - minus.length];
+        int index = 0;
+        for(int x : copy) {
+            if (x != nullFlag) {
+                arr[index++] = x;
+            }
+        }
+
+        return arr;
+    }
 }

@@ -1,6 +1,10 @@
 package project.euler.util;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NumberUtils {
 
@@ -126,6 +130,8 @@ public class NumberUtils {
     }
 
     public static int[] digits(int number) {
+        if (number < 10) return new int[]{number};
+
         int log = (int) Math.log10(number);
         int[] digits = new int[log + 1];
         int index = log;
@@ -136,4 +142,58 @@ public class NumberUtils {
         return digits;
     }
 
+    public static LinkedHashSet<Integer> primesUpTo(int n) {
+        LinkedHashSet<Integer> primes = new LinkedHashSet<>();
+        primes.add(2);
+        int trying = 3;
+        while (trying <= n) {
+            if (isPrime(trying, primes)) {
+                primes.add(trying);
+            }
+            trying += 2;
+        }
+        return primes;
+    }
+
+    private static boolean isPrime(int n, LinkedHashSet<Integer> orderedPrimes) {
+        int sqRoot = (int) Math.sqrt(n);
+        for (int p : orderedPrimes) {
+            if (n % p == 0) return false;
+            if (p > sqRoot) return true;
+        }
+        return true;
+    }
+
+    public static Set<Integer> combinedNumbers(int[] digits, int length) {
+        if (length == 1) {
+            return ArrayUtils.toSet(digits);
+        } else {
+            Set<Integer> combinations = new HashSet<>();
+            Set<Integer> firstDigits = combinedNumbers(digits, length - 1);
+            for (Integer fds : firstDigits) {
+                int[] remainingDigits = ArrayUtils.arrayMinus(digits, digits(fds));
+                Set<Integer> lastDigits = combinedNumbers(remainingDigits, 1);
+                combinations.addAll(lastDigits.stream().map(ld -> fds * 10 + ld).collect(Collectors.toList()));
+            }
+            return combinations;
+        }
+    }
+
+    public static Set<Integer> rotationNumbers(int number) {
+        Set<Integer> rotations = new HashSet<>();
+        int dc = digitCount(number);
+        int divider = (int) Math.pow(10, dc - 1);
+
+        while(!rotations.contains(number)) {
+            rotations.add(number);
+            int carry = number % divider;
+            int result = number / divider;
+            number = carry * 10 + result;
+        }
+        return rotations;
+    }
+
+    public static int digitCount(long number) {
+        return (int) (Math.log10(number) + 1);
+    }
 }

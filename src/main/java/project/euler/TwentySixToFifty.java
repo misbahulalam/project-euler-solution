@@ -5,7 +5,6 @@ import project.euler.util.ArrayUtils;
 import project.euler.util.NumberUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TwentySixToFifty {
@@ -20,6 +19,7 @@ public class TwentySixToFifty {
 //        thirtyTwo();
 //        thirtyThree();
 //        thirtyFour();
+//        thirtyFive();
     }
 
     private static void twentySix() {
@@ -54,7 +54,7 @@ public class TwentySixToFifty {
         int bMaxVal = 1000;
         int nMaxVal = bMaxVal - 1;
         int maxEqVal = quadraticEquationResult(nMaxVal, aMaxVal, bMaxVal);
-        LinkedHashSet<Integer> primes = primesUpTo(maxEqVal);
+        LinkedHashSet<Integer> primes = NumberUtils.primesUpTo(maxEqVal);
 
         int aValForMaxPrimeSeq = Integer.MIN_VALUE, bValForMaxPrimeSeq = Integer.MIN_VALUE, nValForMaxPrimeSeq = Integer.MIN_VALUE;
 
@@ -78,28 +78,6 @@ public class TwentySixToFifty {
 
     private static int quadraticEquationResult(int n, int a, int b) {
         return n * n + a * n + b;
-    }
-
-    private static LinkedHashSet<Integer> primesUpTo(int n) {
-        LinkedHashSet<Integer> primes = new LinkedHashSet<>();
-        primes.add(2);
-        int trying = 3;
-        while (trying <= n) {
-            if (isPrime(trying, primes)) {
-                primes.add(trying);
-            }
-            trying += 2;
-        }
-        return primes;
-    }
-
-    private static boolean isPrime(int n, LinkedHashSet<Integer> orderedPrimes) {
-        int sqRoot = (int) Math.sqrt(n);
-        for (int p : orderedPrimes) {
-            if (n % p == 0) return false;
-            if (p > sqRoot) return true;
-        }
-        return true;
     }
 
     private static void twentyEight() {
@@ -185,10 +163,10 @@ public class TwentySixToFifty {
         int[] digits = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         //For length(x) = 1, length(y) = 4
-        for (int x : possibleValues(digits, 1)) {
-            int[] remainingDigits = arrayMinus(digits, NumberUtils.digits(x));
-            for (int y : possibleValues(remainingDigits, 4)) {
-                int[] allowedResultDigits = arrayMinus(remainingDigits, NumberUtils.digits(y));
+        for (int x : NumberUtils.combinedNumbers(digits, 1)) {
+            int[] remainingDigits = ArrayUtils.arrayMinus(digits, NumberUtils.digits(x));
+            for (int y : NumberUtils.combinedNumbers(remainingDigits, 4)) {
+                int[] allowedResultDigits = ArrayUtils.arrayMinus(remainingDigits, NumberUtils.digits(y));
                 int product = x * y;
                 if (numberConsistOfDigits(product, allowedResultDigits)) {
 //                    System.out.println(x + " x " + y + " = " + product);
@@ -198,10 +176,10 @@ public class TwentySixToFifty {
         }
 
         //For length(x) = 2, length(y) = 3
-        for (int x : possibleValues(digits, 2)) {
-            int[] remainingDigits = arrayMinus(digits, NumberUtils.digits(x));
-            for (int y : possibleValues(remainingDigits, 3)) {
-                int[] allowedResultDigits = arrayMinus(remainingDigits, NumberUtils.digits(y));
+        for (int x : NumberUtils.combinedNumbers(digits, 2)) {
+            int[] remainingDigits = ArrayUtils.arrayMinus(digits, NumberUtils.digits(x));
+            for (int y : NumberUtils.combinedNumbers(remainingDigits, 3)) {
+                int[] allowedResultDigits = ArrayUtils.arrayMinus(remainingDigits, NumberUtils.digits(y));
                 int product = x * y;
                 if (numberConsistOfDigits(product, allowedResultDigits)) {
 //                    System.out.println(x + " x " + y + " = " + product);
@@ -228,32 +206,6 @@ public class TwentySixToFifty {
             }
         }
         return true;
-    }
-
-    private static Set<Integer> possibleValues(int[] digits, int length) {
-        if (length == 1) {
-            return ArrayUtils.toSet(digits);
-        } else {
-            Set<Integer> possibilities = new HashSet<>();
-            Set<Integer> firstDigits = possibleValues(digits, length - 1);
-            for (Integer fds : firstDigits) {
-                int[] remainingDigits = arrayMinus(digits, NumberUtils.digits(fds));
-                Set<Integer> lastDigits = possibleValues(remainingDigits, 1);
-                possibilities.addAll(lastDigits.stream().map(ld -> fds * 10 + ld).collect(Collectors.toList()));
-            }
-            return possibilities;
-        }
-    }
-
-    private static int[] arrayMinus(int[] original, int[] minus) {
-        int[] arr = new int[original.length - minus.length];
-        int index = 0;
-        for (int v : original) {
-            if (!ArrayUtils.contains(minus, v)) {
-                arr[index++] = v;
-            }
-        }
-        return arr;
     }
 
     private static void thirtyThree() {
@@ -289,6 +241,17 @@ public class TwentySixToFifty {
                 .filter(x -> x == Arrays.stream(NumberUtils.digits(x)).map(factorials::get).sum())
                 .sum();
         System.out.println(total);
+    }
+
+    private static void thirtyFive() {
+        int circularPrimeCount = 0;
+        LinkedHashSet<Integer> primes = NumberUtils.primesUpTo(1_000_000);
+
+        for (Integer prime : primes) {
+            Set<Integer> rotations = NumberUtils.rotationNumbers(prime);
+            if (primes.containsAll(rotations)) circularPrimeCount++;
+        }
+        System.out.println(circularPrimeCount);
     }
 
 }
