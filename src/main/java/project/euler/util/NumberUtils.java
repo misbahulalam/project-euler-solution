@@ -155,11 +155,23 @@ public class NumberUtils {
         return primes;
     }
 
-    private static boolean isPrime(int n, LinkedHashSet<Integer> orderedPrimes) {
+    public static boolean isPrime(int n, LinkedHashSet<Integer> primesBeforeInOrder) {
         int sqRoot = (int) Math.sqrt(n);
-        for (int p : orderedPrimes) {
+        for (int p : primesBeforeInOrder) {
             if (n % p == 0) return false;
             if (p > sqRoot) return true;
+        }
+        return true;
+    }
+
+    public static boolean isTruncatablePrime(int target, Set<Integer> primesBefore) {
+        if (target < 10) return false;
+
+        int divider = 10;
+        while (divider < target) {
+            if (!primesBefore.contains(target / divider)) return false;
+            if (!primesBefore.contains(target % divider)) return false;
+            divider *= 10;
         }
         return true;
     }
@@ -238,4 +250,5 @@ public class NumberUtils {
         index++;
         return String.valueOf(carries, index, 32 - index);
     }
+
 }

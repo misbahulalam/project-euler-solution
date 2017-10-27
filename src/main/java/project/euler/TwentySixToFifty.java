@@ -21,6 +21,7 @@ public class TwentySixToFifty {
 //        thirtyFour();
 //        thirtyFive();
 //        thirtySix();
+//        thirtySeven();
     }
 
     private static void twentySix() {
@@ -260,4 +261,23 @@ public class TwentySixToFifty {
         System.out.println(sum);
     }
 
+    private static void thirtySeven() {
+        LinkedHashSet<Integer> primes = new LinkedHashSet<>();
+        primes.add(2);
+        int count = 0;
+        int trying = 3;
+        int sum = 0;
+        while (count != 11) {
+            if (NumberUtils.isPrime(trying, primes)) {
+                primes.add(trying);
+
+                if (NumberUtils.isTruncatablePrime(trying, primes)) {
+                    sum += trying;
+                    count++;
+                }
+            }
+            trying += 2;
+        }
+        System.out.println(sum);
+    }
 }
