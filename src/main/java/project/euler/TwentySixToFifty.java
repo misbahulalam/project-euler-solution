@@ -20,6 +20,7 @@ public class TwentySixToFifty {
 //        thirtyThree();
 //        thirtyFour();
 //        thirtyFive();
+//        thirtySix();
     }
 
     private static void twentySix() {
@@ -252,6 +253,11 @@ public class TwentySixToFifty {
             if (primes.containsAll(rotations)) circularPrimeCount++;
         }
         System.out.println(circularPrimeCount);
+    }
+
+    private static void thirtySix() {
+        int sum = IntStream.range(1, 1_000_000).filter(x -> NumberUtils.isPalindrome(x) && NumberUtils.isPalindrome(NumberUtils.binary(x))).sum();
+        System.out.println(sum);
     }
 
 }

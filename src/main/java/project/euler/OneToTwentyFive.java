@@ -84,23 +84,12 @@ public class OneToTwentyFive {
     private static void four() {
         long max = 999 * 999;
         while (max > 99 * 99) {
-            if (isPalindrome(max) && isProductOfTwo3dNum(max)) {
+            if (NumberUtils.isPalindrome(max) && isProductOfTwo3dNum(max)) {
                 System.out.println(max);
                 break;
             }
             max--;
         }
-    }
-
-    private static boolean isPalindrome(long n) {
-        String s = Long.toString(n);
-        int l = s.length();
-        for (int i = 0; i < l / 2; i++) {
-            if (s.charAt(i) != s.charAt(l - i - 1)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private static boolean isProductOfTwo3dNum(long n) {
@@ -631,7 +620,7 @@ public class OneToTwentyFive {
             case 11:
                 return 30;
             case 2:
-                return y % 4 == 0? 29 : 28;
+                return y % 4 == 0 ? 29 : 28;
             default:
                 return 31;
         }

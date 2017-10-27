@@ -129,14 +129,14 @@ public class NumberUtils {
         }
     }
 
-    public static int[] digits(int number) {
-        if (number < 10) return new int[]{number};
+    public static int[] digits(long number) {
+        if (number < 10) return new int[]{(int) number};
 
         int log = (int) Math.log10(number);
         int[] digits = new int[log + 1];
         int index = log;
-        while(number > 0) {
-            digits[index--] = number % 10;
+        while (number > 0) {
+            digits[index--] = (int) (number % 10);
             number /= 10;
         }
         return digits;
@@ -184,7 +184,7 @@ public class NumberUtils {
         int dc = digitCount(number);
         int divider = (int) Math.pow(10, dc - 1);
 
-        while(!rotations.contains(number)) {
+        while (!rotations.contains(number)) {
             rotations.add(number);
             int carry = number % divider;
             int result = number / divider;
@@ -195,5 +195,47 @@ public class NumberUtils {
 
     public static int digitCount(long number) {
         return (int) (Math.log10(number) + 1);
+    }
+
+    public static boolean isPalindrome(String s) {
+        char[] chars = s.toCharArray();
+        int l = chars.length;
+        for (int i = 0; i < l / 2; i++) {
+            if (chars[i] != chars[l - i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isPalindrome(long x) {
+        int[] digits = NumberUtils.digits(x);
+        int l = digits.length;
+        for (int i = 0; i < l / 2; i++) {
+            if (digits[i] != digits[l - i - 1]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String binary(int decimal) {
+        return decimalToBase(decimal, 2);
+    }
+
+    public static String octal(int decimal) {
+        return decimalToBase(decimal, 8);
+    }
+
+    private static String decimalToBase(int decimal, int base) {
+        char[] carries = new char[32];
+        int index = 31;
+
+        while (decimal != 0) {
+            carries[index--] = (char) (decimal % base + '0');
+            decimal /= base;
+        }
+        index++;
+        return String.valueOf(carries, index, 32 - index);
     }
 }
