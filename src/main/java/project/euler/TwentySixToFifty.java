@@ -24,6 +24,7 @@ public class TwentySixToFifty {
 //        thirtySeven();
 //        thirtyEight();
 //        thirtyNine();
+//        forty();
     }
 
     private static void twentySix() {
@@ -338,5 +339,19 @@ public class TwentySixToFifty {
             }
         }
         System.out.println(pForMaxTriangleCount);
+    }
+
+    private static void forty() {
+        int mul = 1;
+        int length = 1;
+        int target = 1;
+        do {
+            target++;
+            if (NumberUtils.digitCount(length) != NumberUtils.digitCount(length + NumberUtils.digitCount(target))) {
+                mul *= NumberUtils.digits(target)[9 - length % 10];
+            }
+            length += NumberUtils.digitCount(target);
+        } while (length <= 1_000_000);
+        System.out.println(mul);
     }
 }
