@@ -3,6 +3,7 @@ package project.euler;
 import org.apache.commons.lang3.math.Fraction;
 import project.euler.util.ArrayUtils;
 import project.euler.util.NumberUtils;
+import project.euler.util.ResourcesUtils;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -26,6 +27,7 @@ public class TwentySixToFifty {
 //        thirtyNine();
 //        forty();
 //        fortyOne();
+//        fortyTwo();
     }
 
     private static void twentySix() {
@@ -365,5 +367,30 @@ public class TwentySixToFifty {
                 break;
             }
         }
+    }
+
+    private static void fortyTwo() {
+        String fileName = "p042_words.txt";
+
+        long count = Arrays.stream(ResourcesUtils.readAsCsvString(fileName))
+                .map(s -> s.substring(1, s.length() - 1))
+                .mapToInt(TwentySixToFifty::wordValue)
+                .filter(TwentySixToFifty::isTriangleNumber)
+                .count();
+        System.out.println(count);
+    }
+
+    private static int wordValue(String s) {
+        return s.chars().map(x -> x - 'A' + 1).sum();
+    }
+
+    private static boolean isTriangleNumber(int n) {
+        int s = 0, a = 1;
+        while (s < n) {
+            s += a;
+            a++;
+            if (s == n) return true;
+        }
+        return false;
     }
 }

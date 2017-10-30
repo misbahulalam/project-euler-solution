@@ -11,5 +11,7 @@ repositories {
 
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.6'
+    compile 'commons-io:commons-io:2.6'
+    compile('org.projectlombok:lombok:1.16.18')
     testCompile 'junit:junit:4.12'
 }
