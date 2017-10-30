@@ -23,12 +23,37 @@ public class ArrayUtils extends org.apache.commons.lang3.ArrayUtils {
         throw new IllegalArgumentException("Value " + Arrays.toString(input) + " have the highest lexicographic value.");
     }
 
+    public static void updateToPreviousLexPermutation(int[] input) {
+        for (int i = input.length - 2; i >= 0; i--) {
+            for (int j = input.length - 1; j > i; j--) {
+                if (input[j] < input[i]) {
+                    swapPosition(input, i, j);
+                    sortSubArrayDesc(input, i + 1);
+                    return;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Value " + Arrays.toString(input) + " have the lowest lexicographic value.");
+    }
+
     private static void sortSubArray(int[] arr, int startPosition) {
         if (startPosition == arr.length - 1) return;
 
         for (int i = startPosition; i <= arr.length - 2; i++) {
             for (int j = i + 1; j <= arr.length - 1; j++) {
                 if (arr[i] > arr[j]) {
+                    swapPosition(arr, i, j);
+                }
+            }
+        }
+    }
+
+    private static void sortSubArrayDesc(int[] arr, int startPosition) {
+        if (startPosition == arr.length - 1) return;
+
+        for (int i = startPosition; i <= arr.length - 2; i++) {
+            for (int j = i + 1; j <= arr.length - 1; j++) {
+                if (arr[i] < arr[j]) {
                     swapPosition(arr, i, j);
                 }
             }

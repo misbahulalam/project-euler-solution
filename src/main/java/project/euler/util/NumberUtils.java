@@ -163,7 +163,7 @@ public class NumberUtils {
         return primes;
     }
 
-    public static boolean isPrime(int n, LinkedHashSet<Integer> primesBeforeInOrder) {
+    public static boolean isPrime(long n, LinkedHashSet<Integer> primesBeforeInOrder) {
         int sqRoot = (int) Math.sqrt(n);
         for (int p : primesBeforeInOrder) {
             if (n % p == 0) return false;

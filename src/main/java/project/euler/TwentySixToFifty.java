@@ -362,10 +362,28 @@ public class TwentySixToFifty {
     private static void fortyOne() {
         int maxPandigital = 987654321;
         LinkedHashSet<Integer> primeFactors = NumberUtils.primesUpTo((int) Math.sqrt(maxPandigital));
-        for (int i = maxPandigital; i > 1; i--) {
-            if (NumberUtils.isPandigital(i) && NumberUtils.isPrime(i, primeFactors)) {
-                System.out.println(i);
-                break;
+
+        for (int size = 9; size > 0; size--) {
+            int[] digits = new int[size];
+            int[] lowest = new int[size];
+            for (int i = 0; i < size; i++) {
+                digits[i] = size - i;
+                lowest[i] = i + 1;
+            }
+
+            if (NumberUtils.isPrime(NumberUtils.toNumber(digits), primeFactors)) {
+                System.out.println(NumberUtils.toNumber(digits));
+                return;
+            }
+
+            while (!Arrays.equals(digits, lowest)) {
+                ArrayUtils.updateToPreviousLexPermutation(digits);
+
+                long value = NumberUtils.toNumber(digits);
+                if (NumberUtils.isPrime(value, primeFactors)) {
+                    System.out.println(value);
+                    return;
+                }
             }
         }
     }
