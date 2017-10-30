@@ -142,6 +142,14 @@ public class NumberUtils {
         return digits;
     }
 
+    public static long toNumber(int[] digits) {
+        long number = 0;
+        for (int digit : digits) {
+            number = number * 10 + digit;
+        }
+        return number;
+    }
+
     public static LinkedHashSet<Integer> primesUpTo(int n) {
         LinkedHashSet<Integer> primes = new LinkedHashSet<>();
         primes.add(2);
@@ -252,20 +260,21 @@ public class NumberUtils {
     }
 
     public static boolean isPandigital(int number) {
-        return isPandigital(number, digitCount(number));
+        return isPandigital(number, 1, digitCount(number));
     }
 
-    public static boolean isPandigital(int number, int numberOfDigits) {
-        if (numberOfDigits < 1 || numberOfDigits > 9 || digitCount(number) != numberOfDigits) return false;
+    public static boolean isPandigital(long number, int min, int max) {
+        int digitCount = digitCount(number);
+        if (digitCount != (max - min + 1)) return false;
 
-        int[] ordered = new int[numberOfDigits];
+        int[] ordered = new int[digitCount];
         int[] digits = NumberUtils.digits(number);
 
         for (int digit : digits) {
-            if (digit < 1 || digit > numberOfDigits || ordered[digit - 1] != 0) {
+            if (digit < min || digit > max || ordered[digit - min] != 0) {
                 return false;
             } else {
-                ordered[digit - 1] = digit;
+                ordered[digit - min] = digit;
             }
         }
 

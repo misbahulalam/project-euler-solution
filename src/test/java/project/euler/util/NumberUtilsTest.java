@@ -13,8 +13,10 @@ public class NumberUtilsTest {
 
     @Test
     public void isPandigitalTests() {
-        assertTrue(NumberUtils.isPandigital(12, 2));
-        assertFalse(NumberUtils.isPandigital(102, 3));
-        assertFalse(NumberUtils.isPandigital(182, 3));
+        assertTrue(NumberUtils.isPandigital(12, 1, 2));
+        assertFalse(NumberUtils.isPandigital(102, 1, 3));
+        assertTrue(NumberUtils.isPandigital(102, 0, 2));
+        assertFalse(NumberUtils.isPandigital(182, 1, 3));
+        assertTrue(NumberUtils.isPandigital(1406357289, 0, 9));
     }
 }

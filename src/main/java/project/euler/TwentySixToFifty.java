@@ -28,6 +28,7 @@ public class TwentySixToFifty {
 //        forty();
 //        fortyOne();
 //        fortyTwo();
+//        fortyThree();
     }
 
     private static void twentySix() {
@@ -393,4 +394,28 @@ public class TwentySixToFifty {
         }
         return false;
     }
+
+    private static void fortyThree() {
+        int[] digits = {1, 0, 2, 3, 4, 5, 6, 7, 8, 9};
+        long sum = hasSubstringDivisibilityProperty(digits) ? NumberUtils.toNumber(digits) : 0;
+        while (!Arrays.equals(digits, new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0})) {
+            ArrayUtils.updateToNextLexPermutation(digits);
+            if (hasSubstringDivisibilityProperty(digits)) {
+                sum += NumberUtils.toNumber(digits);
+            }
+        }
+        System.out.println(sum);
+    }
+
+    private static boolean hasSubstringDivisibilityProperty(int[] digits) {
+        int[] divisors = {2, 3, 5, 7, 11, 13, 17};
+
+        for (int i = 0; i < divisors.length; i++) {
+            if ((digits[i + 1] * 100 + digits[i + 2] * 10 + digits[i + 3]) % divisors[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
