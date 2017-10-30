@@ -251,4 +251,25 @@ public class NumberUtils {
         return String.valueOf(carries, index, 32 - index);
     }
 
+    public static boolean isPandigital(int number) {
+        return isPandigital(number, digitCount(number));
+    }
+
+    public static boolean isPandigital(int number, int numberOfDigits) {
+        if (numberOfDigits < 1 || numberOfDigits > 9 || digitCount(number) != numberOfDigits) return false;
+
+        int[] ordered = new int[numberOfDigits];
+        int[] digits = NumberUtils.digits(number);
+
+        for (int digit : digits) {
+            if (digit < 1 || digit > numberOfDigits || ordered[digit - 1] != 0) {
+                return false;
+            } else {
+                ordered[digit - 1] = digit;
+            }
+        }
+
+        return true;
+    }
+
 }

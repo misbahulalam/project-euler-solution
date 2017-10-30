@@ -25,6 +25,7 @@ public class TwentySixToFifty {
 //        thirtyEight();
 //        thirtyNine();
 //        forty();
+//        fortyOne();
     }
 
     private static void twentySix() {
@@ -353,5 +354,16 @@ public class TwentySixToFifty {
             length += NumberUtils.digitCount(target);
         } while (length <= 1_000_000);
         System.out.println(mul);
+    }
+
+    private static void fortyOne() {
+        int maxPandigital = 987654321;
+        LinkedHashSet<Integer> primeFactors = NumberUtils.primesUpTo((int) Math.sqrt(maxPandigital));
+        for (int i = maxPandigital; i > 1; i--) {
+            if (NumberUtils.isPandigital(i) && NumberUtils.isPrime(i, primeFactors)) {
+                System.out.println(i);
+                break;
+            }
+        }
     }
 }
