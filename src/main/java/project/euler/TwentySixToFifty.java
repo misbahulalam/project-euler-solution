@@ -30,6 +30,7 @@ public class TwentySixToFifty {
 //        fortyTwo();
 //        fortyThree();
 //        fortyFour();
+//        fortyFive();
     }
 
     private static void twentySix() {
@@ -461,6 +462,35 @@ public class TwentySixToFifty {
         }
         PentagonPair succeedPair = pairs.get(position);
         System.out.println(succeedPair.getPentagonalDifference());
+    }
+
+    private static void fortyFive() {
+        int ti = 286, pi = 166, hi = 144;
+        long t = triangular(ti);
+        long p = pentagonal(pi);
+        long h = hexagonal(hi);
+        while (t != p || t != h) {
+            long min = NumberUtils.min(t, p, h);
+            if (t == min) t = triangular(++ti);
+            if (p == min) p = pentagonal(++pi);
+            if (h == min) h = hexagonal(++hi);
+        }
+        System.out.println(t);
+    }
+
+    private static long triangular(int x) {
+        long lx = (long) x;
+        return (lx * lx + lx) / 2;
+    }
+
+    private static long pentagonal(int x) {
+        long lx = (long) x;
+        return (3 * lx * lx - lx) / 2;
+    }
+
+    private static long hexagonal(int x) {
+        long lx = (long) x;
+        return 2 * lx * lx - x;
     }
 
 }

@@ -121,6 +121,14 @@ public class NumberUtils {
         return max;
     }
 
+    public static long min(long... numbers) {
+        long min = Long.MAX_VALUE;
+        for (long val : numbers) {
+            min = Math.min(min, val);
+        }
+        return min;
+    }
+
     public static long factorial(long x) {
         if (x == 0 || x == 1) {
             return 1;
