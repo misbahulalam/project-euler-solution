@@ -31,6 +31,7 @@ public class TwentySixToFifty {
 //        fortyThree();
 //        fortyFour();
 //        fortyFive();
+//        fortySix();
     }
 
     private static void twentySix() {
@@ -493,4 +494,35 @@ public class TwentySixToFifty {
         return 2 * lx * lx - x;
     }
 
+    private static void fortySix() {
+        int th = 10_000; //Assuming the number is within this value
+        LinkedHashSet<Integer> primes = NumberUtils.primesUpTo(th);
+        Set<Integer> squares = NumberUtils.squaresUpTo(th);
+
+        int target = 9;
+        while (target < th) {
+            if (primes.contains(target)) {
+                target += 2;
+                continue;
+            }
+
+            boolean flag = false;
+
+            for (int prime : primes) {
+                if (prime == 2) continue;
+                if (prime >= target) break;
+                int halfDiff = (target - prime) / 2;
+                if (squares.contains(halfDiff)) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                System.out.println(target);
+                break;
+            }
+            target += 2;
+        }
+    }
 }

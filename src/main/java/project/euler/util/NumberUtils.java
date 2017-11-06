@@ -180,6 +180,19 @@ public class NumberUtils {
         return true;
     }
 
+    public static Set<Integer> squaresUpTo(int n) {
+        Set<Integer> squares = new HashSet<>();
+        int i = 1;
+        int square = i * i;
+        while (square <= n) {
+            squares.add(square);
+            i++;
+            square = i * i;
+        }
+
+        return squares;
+    }
+
     public static boolean isTruncatablePrime(int target, Set<Integer> primesBefore) {
         if (target < 10) return false;
 
