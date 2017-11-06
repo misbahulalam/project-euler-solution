@@ -29,6 +29,7 @@ public class TwentySixToFifty {
 //        fortyOne();
 //        fortyTwo();
 //        fortyThree();
+//        fortyFour();
     }
 
     private static void twentySix() {
@@ -434,6 +435,32 @@ public class TwentySixToFifty {
             }
         }
         return true;
+    }
+
+    private static void fortyFour() {
+        int position = 0;
+        List<PentagonPair> pairs = new ArrayList<>();
+        pairs.add(new PentagonPair(1, 2));
+        while (!pairs.get(position).isBothPentagonalSumAndDiffPentagonal()) {
+            pairs.get(position).next();
+
+            if (position == (pairs.size() - 1)) {
+                pairs.add(new PentagonPair(1, pairs.size() + 2));
+            }
+
+            int minDiffPairIndex = -1;
+            long minPairDiff = Long.MAX_VALUE;
+            for (int i = 0; i < pairs.size(); i++) {
+                long pentagonalDifference = pairs.get(i).getPentagonalDifference();
+                if (pentagonalDifference < minPairDiff) {
+                    minDiffPairIndex = i;
+                    minPairDiff = pentagonalDifference;
+                }
+            }
+            position = minDiffPairIndex;
+        }
+        PentagonPair succeedPair = pairs.get(position);
+        System.out.println(succeedPair.getPentagonalDifference());
     }
 
 }
