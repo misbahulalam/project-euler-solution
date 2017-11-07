@@ -1,9 +1,6 @@
 package project.euler.util;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class NumberUtils {
@@ -178,6 +175,28 @@ public class NumberUtils {
             if (p > sqRoot) return true;
         }
         return true;
+    }
+
+    public static Set<Integer> distinctPrimeFactors(int n) {
+        return primeFactors(n).keySet();
+    }
+
+    public static Map<Integer, Integer> primeFactors(int n) {
+        int sqRoot = (int) Math.sqrt(n);
+        Set<Integer> primesUpToSqRoot = primesUpTo(sqRoot);
+        Map<Integer, Integer> factorPowerMap = new HashMap<>();
+
+        for (int prime : primesUpToSqRoot) {
+            int power = 0;
+            while (n % prime == 0) {
+                power++;
+                n /= prime;
+            }
+            if (power > 0) factorPowerMap.put(prime, power);
+        }
+        if (n != 1) factorPowerMap.put(n, 1);
+
+        return factorPowerMap;
     }
 
     public static Set<Integer> squaresUpTo(int n) {

@@ -6,6 +6,7 @@ import project.euler.util.NumberUtils;
 import project.euler.util.ResourcesUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TwentySixToFifty {
@@ -32,6 +33,7 @@ public class TwentySixToFifty {
 //        fortyFour();
 //        fortyFive();
 //        fortySix();
+//        fortySeven();
     }
 
     private static void twentySix() {
@@ -524,5 +526,30 @@ public class TwentySixToFifty {
             }
             target += 2;
         }
+    }
+
+    private static void fortySeven() {
+        int target = 4;
+        while (!satisfyFortySeven(target)) {
+            target++;
+        }
+        System.out.println(target);
+    }
+
+
+
+    private static boolean satisfyFortySeven(int x) {
+        int n = 4;
+        Set<Pair> pFactors = new HashSet<>(n * n);
+        for (int i = 0; i < n; i++) {
+            Set<Pair> pf = primeFactorsAsNumberPowerPair(x + i);
+            pFactors.addAll(pf);
+            if (pf.size() != n || pFactors.size() != n * (i + 1)) return false;
+        }
+        return true;
+    }
+
+    private static Set<Pair> primeFactorsAsNumberPowerPair(int n) {
+        return NumberUtils.primeFactors(n).entrySet().stream().map(e -> new Pair<>(e.getKey(), e.getValue())).collect(Collectors.toSet());
     }
 }
