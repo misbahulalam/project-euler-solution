@@ -168,7 +168,21 @@ public class NumberUtils {
         return primes;
     }
 
+    public static Set<Integer> primesBetween(int from, int to) {
+        LinkedHashSet<Integer> primesUpToSqRoot = primesUpTo((int) Math.sqrt(to));
+        Set<Integer> primesBetween = new HashSet<>();
+        int trying = from;
+        while (trying <= to) {
+            if (primesUpToSqRoot.contains(trying) || isPrime(trying, primesUpToSqRoot)) {
+                primesBetween.add(trying);
+            }
+            trying += (trying % 2 == 0 || trying <= 2 ? 1 : 2);
+        }
+        return primesBetween;
+    }
+
     public static boolean isPrime(long n, LinkedHashSet<Integer> primesBeforeInOrder) {
+        if (n < 2) return false;
         int sqRoot = (int) Math.sqrt(n);
         for (int p : primesBeforeInOrder) {
             if (n % p == 0) return false;

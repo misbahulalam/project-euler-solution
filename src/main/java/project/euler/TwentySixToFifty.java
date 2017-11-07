@@ -36,6 +36,7 @@ public class TwentySixToFifty {
 //        fortySix();
 //        fortySeven();
 //        fortyEight();
+//        fortyNine();
     }
 
     private static void twentySix() {
@@ -564,5 +565,29 @@ public class TwentySixToFifty {
             sum = sum.add(bd);
         }
         System.out.println(sum.remainder(divider));
+    }
+
+    private static void fortyNine() {
+        Set<Integer> primes = NumberUtils.primesBetween(1023, 9876);
+        for (int prime : primes) {
+
+            List<Integer> primePerm = NumberUtils.combinedNumbers(NumberUtils.digits(prime), 4)
+                    .stream()
+                    .filter(primes::contains)
+                    .sorted()
+                    .collect(Collectors.toList());
+
+            if (primePerm.size() > 2 && primePerm.get(0) == prime) {
+                for (int i = 0; i < primePerm.size() - 2; i++) {
+                    for (int j = i + 1; j < primePerm.size() - 1; j++) {
+                        int diff = primePerm.get(j) - primePerm.get(i);
+                        if (primePerm.contains(primePerm.get(j) + diff)) {
+                            System.out.println(primePerm.get(i) + "" + primePerm.get(j) + (primePerm.get(j) + diff));
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }
