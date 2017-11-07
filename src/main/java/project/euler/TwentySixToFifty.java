@@ -5,6 +5,7 @@ import project.euler.util.ArrayUtils;
 import project.euler.util.NumberUtils;
 import project.euler.util.ResourcesUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,6 +35,7 @@ public class TwentySixToFifty {
 //        fortyFive();
 //        fortySix();
 //        fortySeven();
+//        fortyEight();
     }
 
     private static void twentySix() {
@@ -551,5 +553,16 @@ public class TwentySixToFifty {
 
     private static Set<Pair> primeFactorsAsNumberPowerPair(int n) {
         return NumberUtils.primeFactors(n).entrySet().stream().map(e -> new Pair<>(e.getKey(), e.getValue())).collect(Collectors.toSet());
+    }
+
+    private static void fortyEight() {
+        BigDecimal sum = new BigDecimal(0);
+        BigDecimal divider = new BigDecimal(10_000_000_000l);
+
+        for (int i = 1; i <= 1000; i++) {
+            BigDecimal bd = new BigDecimal(i).pow(i).remainder(divider);
+            sum = sum.add(bd);
+        }
+        System.out.println(sum.remainder(divider));
     }
 }
