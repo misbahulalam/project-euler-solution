@@ -37,6 +37,7 @@ public class TwentySixToFifty {
 //        fortySeven();
 //        fortyEight();
 //        fortyNine();
+//        fifty();
     }
 
     private static void twentySix() {
@@ -590,4 +591,38 @@ public class TwentySixToFifty {
 
         }
     }
+
+    private static void fifty() {
+        LinkedHashSet<Integer> sortedPrimeSet = NumberUtils.primesUpTo(1_000_000);
+        int[] primes = sortedPrimeSet.stream().mapToInt(Integer::intValue).toArray();
+
+        int size = primes.length;
+        int maxPrime = primes[size - 1];
+        int primesCount = 2;
+        int result = -1; //not defined yet
+        while(true) {
+            int sum = IntStream.range(0, primesCount).map(i -> primes[i]).sum();
+            if (sum > maxPrime) break;
+            if (sortedPrimeSet.contains(sum)) {
+                result = sum;
+                primesCount++;
+                continue;
+            }
+
+            for (int i = 0; i <= size - 3 ; i++) {
+                sum = sum - primes[i] + primes[i + primesCount];
+                if (sum > maxPrime) {
+                    primesCount++;
+                    break;
+                } if (sortedPrimeSet.contains(sum)) {
+                    result = sum;
+                    primesCount++;
+                    break;
+                }
+            }
+        }
+
+        System.out.println(result);
+    }
+
 }
