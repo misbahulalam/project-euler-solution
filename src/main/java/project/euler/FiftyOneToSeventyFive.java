@@ -16,6 +16,7 @@ public class FiftyOneToSeventyFive {
 
     public static void main(String... args) {
 //        fiftyOne();
+//        fiftyTwo();
 //        sixtySeven();
     }
 
@@ -34,6 +35,26 @@ public class FiftyOneToSeventyFive {
                 }
 
             }
+        }
+    }
+
+    private static void fiftyTwo () {
+        int x = 1;
+        while (true) {
+            int[] digits = NumberUtils.digits(x);
+            Set<Integer> combinations = NumberUtils.combinedNumbers(digits, digits.length);
+            boolean flag = true;
+            for (int times = 2; times <= 6; times++) {
+                if (!combinations.contains(x * times)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                System.out.println(x);
+                break;
+            }
+            x++;
         }
     }
 
