@@ -2,6 +2,7 @@ package project.euler.util;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class NumberUtils {
 
@@ -147,12 +148,34 @@ public class NumberUtils {
         return digits;
     }
 
+    public static int[] digits(long number, int length) {
+        int digitsCount = digitCount(number);
+        if (digitCount(number) > length) throw new IllegalArgumentException();
+
+        int[] digits = new int[length];
+        System.arraycopy(digits(number), 0, digits, length - digitsCount, digitsCount);
+        return digits;
+    }
+
     public static long toNumber(int[] digits) {
         long number = 0;
         for (int digit : digits) {
             number = number * 10 + digit;
         }
         return number;
+    }
+
+    public static Set<Integer> squaresUpTo(int n) {
+        Set<Integer> squares = new HashSet<>();
+        int i = 1;
+        int square = i * i;
+        while (square <= n) {
+            squares.add(square);
+            i++;
+            square = i * i;
+        }
+
+        return squares;
     }
 
     public static LinkedHashSet<Integer> primesUpTo(int n) {
@@ -213,19 +236,6 @@ public class NumberUtils {
         return factorPowerMap;
     }
 
-    public static Set<Integer> squaresUpTo(int n) {
-        Set<Integer> squares = new HashSet<>();
-        int i = 1;
-        int square = i * i;
-        while (square <= n) {
-            squares.add(square);
-            i++;
-            square = i * i;
-        }
-
-        return squares;
-    }
-
     public static boolean isTruncatablePrime(int target, Set<Integer> primesBefore) {
         if (target < 10) return false;
 
@@ -253,6 +263,27 @@ public class NumberUtils {
         }
     }
 
+    public static Set<Set<Integer>> combinedDigits(int[] digits, int length) {
+        if (length == 1) {
+            return IntStream.of(digits).mapToObj(Collections::singleton).collect(Collectors.toSet());
+        } else {
+            Set<Set<Integer>> combinations = new HashSet<>();
+            Set<Set<Integer>> firstDigits = combinedDigits(digits, length - 1);
+            for (Set<Integer> fds : firstDigits) {
+                IntStream remainingDigits = IntStream.of(digits).filter(d -> !fds.contains(d));
+
+                combinations.addAll(remainingDigits.mapToObj(ld -> addItem(fds, ld)).collect(Collectors.toSet()));
+            }
+            return combinations;
+        }
+    }
+
+    private static Set<Integer> addItem(Set<Integer> set, int newItem) {
+        Set<Integer> newSet = new HashSet<>(set);
+        newSet.add(newItem);
+        return newSet;
+    }
+
     public static Set<Integer> rotationNumbers(int number) {
         Set<Integer> rotations = new HashSet<>();
         int dc = digitCount(number);
@@ -268,7 +299,9 @@ public class NumberUtils {
     }
 
     public static int digitCount(long number) {
-        return (int) (Math.log10(number) + 1);
+        if (number < 0) throw new IllegalArgumentException("This method works only with zero and positive numbers.");
+
+        return number == 0 ? 0 : (int) (Math.log10(number) + 1);
     }
 
     public static boolean isPalindrome(String s) {

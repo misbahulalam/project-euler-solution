@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -17,6 +18,12 @@ public class ArrayUtilsTest {
         int[] numbers = {4, 3, 2, 1};
         ArrayUtils.updateToPreviousLexPermutation(numbers);
         assertTrue(Arrays.equals(numbers, new int[] {4, 3, 1, 2}));
+    }
+
+    @Test
+    public void concatTests() {
+        int[] concat = ArrayUtils.concat(new int[]{1, 2, 3}, new int[]{4, 5});
+        assertArrayEquals(new int[]{1, 2, 3, 4, 5}, concat);
     }
 
 }

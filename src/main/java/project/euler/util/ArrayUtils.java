@@ -93,4 +93,12 @@ public class ArrayUtils extends org.apache.commons.lang3.ArrayUtils {
 
         return arr;
     }
+
+    public static int[] concat(int[] first, int[] last) {
+        int[] result = new int[first.length + last.length];
+        System.arraycopy(first, 0, result, 0, first.length);
+        System.arraycopy(last, 0, result, first.length, last.length);
+        return result;
+    }
+
 }

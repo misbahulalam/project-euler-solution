@@ -3,6 +3,11 @@ package project.euler;
 import project.euler.util.NumberUtils;
 import project.euler.util.ResourcesUtils;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * @author <a href="mailto:misbahulalam@gmail.com">Misbahul Alam Chowdhury</a> on Oct 25, 2017
  * @since 1.0
@@ -10,7 +15,64 @@ import project.euler.util.ResourcesUtils;
 public class FiftyOneToSeventyFive {
 
     public static void main(String... args) {
-        sixtySeven();
+//        fiftyOne();
+//        sixtySeven();
+    }
+
+    private static void fiftyOne() {
+        int dc = 6;  //considering 6 digits numbers
+        Set<Integer> primes = NumberUtils.primesBetween((int) Math.pow(10, dc - 1), (int) Math.pow(10, dc));
+        for (int ac = 1; ac < dc; ac++) { //Asterisks Count, i.e. numbers of digits to be replaced
+            int lLimit = 0;
+            int uLimit = (int) Math.pow(10, dc - ac);
+            Set<Set<Integer>> aps = possibleAsteriskPositions(dc, ac);
+
+            for (Set<Integer> ap : aps) {
+                for (int woAsterisk = lLimit; woAsterisk < uLimit; woAsterisk++) {
+                    int[] replacedPrimes = possibleNumbersReplacingAsterisks(woAsterisk, dc, ap).filter(primes::contains).toArray();
+                    if (replacedPrimes.length >= 8) System.out.println(Arrays.toString(replacedPrimes));
+                }
+
+            }
+        }
+    }
+
+    private static IntStream possibleNumbersReplacingAsterisks(int withoutAsterisk, int totalDigits, Set<Integer> asteriskPositions) {
+        int ac = asteriskPositions.size();      //asterisks count
+        int[] digits = NumberUtils.digits(withoutAsterisk, totalDigits - ac);
+
+        int dc = digits.length;                 //digits count
+        int dp = 0;                             //digits pointer
+
+        int value = 0;
+        for (int cp = 0; cp < dc + ac; cp++) {  //cp means current position
+            value *= 10;
+            if (!asteriskPositions.contains(cp)) {
+                value += digits[dp];
+                dp++;
+            }
+        }
+        int asteriskZeroValue = value;
+
+        int[] asteriskWeights = new int[10];
+        for (int av = 0; av <= 9; av++) {       //asterisk value, i.e. 0~9.
+            for (int ap : asteriskPositions) {
+                asteriskWeights[av] += av * (int) Math.pow(10, dc + ac - ap - 1);
+            }
+        }
+
+        int minValue = (int) Math.pow(10, dc + ac - 1);
+        return Arrays.stream(asteriskWeights).map(x -> x + asteriskZeroValue).filter(x -> x >= minValue);
+    }
+
+    private static Set<Set<Integer>> possibleAsteriskPositions(int digitsCount, int asteriskCount) {
+        int[] positions = IntStream.range(0, digitsCount).toArray();
+        Set<Set<Integer>> combinations = NumberUtils.combinedDigits(positions, asteriskCount);
+        return combinations.stream().collect(Collectors.toSet());
+    }
+
+    private int[] nDigitNumbers(int n) {
+        return IntStream.range((int) Math.pow(10, n - 1), (int) Math.pow(10, n)).toArray();
     }
 
     private static void sixtySeven() {
