@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 /**
  * @author <a href="mailto:misbahulalam@gmail.com">Misbahul Alam Chowdhury</a> on Oct 30, 2017
@@ -21,6 +22,12 @@ public class ResourcesUtils {
 
     public static String[] readAsCsvString(String fileName) {
         return readAsString(fileName).split(",");
+    }
+
+    public static String[][] readAs2DStringArray(String fileName, String delimiter) {
+        return Arrays.stream(readAsString(fileName).split("\n"))
+                .map(line -> line.split(delimiter))
+                .toArray(String[][]::new);
     }
 
 }

@@ -1,5 +1,6 @@
 package project.euler;
 
+import project.euler.card.PokerHand;
 import project.euler.util.NumberUtils;
 import project.euler.util.ResourcesUtils;
 
@@ -18,6 +19,7 @@ public class FiftyOneToSeventyFive {
 //        fiftyOne();
 //        fiftyTwo();
 //        fiftyThree();
+        fiftyFour();
 //        sixtySeven();
     }
 
@@ -126,6 +128,17 @@ public class FiftyOneToSeventyFive {
             if (c > 1_000_000) return true;
         }
         return c > 1_000_000;
+    }
+
+    private static void fiftyFour() {
+        String[][] cards = ResourcesUtils.readAs2DStringArray("p054_poker.txt", " ");
+        int p1Wins = 0;
+        for (String[] tenCards : cards) {
+            if (new PokerHand(tenCards[0], tenCards[1], tenCards[2], tenCards[3], tenCards[4]).isWiner(new PokerHand(tenCards[5], tenCards[6], tenCards[7], tenCards[8], tenCards[9]))) {
+                p1Wins++;
+            }
+        }
+        System.out.println(p1Wins);
     }
 
     private static void sixtySeven() {
