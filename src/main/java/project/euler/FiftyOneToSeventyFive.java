@@ -17,6 +17,7 @@ public class FiftyOneToSeventyFive {
     public static void main(String... args) {
 //        fiftyOne();
 //        fiftyTwo();
+//        fiftyThree();
 //        sixtySeven();
     }
 
@@ -94,6 +95,37 @@ public class FiftyOneToSeventyFive {
 
     private int[] nDigitNumbers(int n) {
         return IntStream.range((int) Math.pow(10, n - 1), (int) Math.pow(10, n)).toArray();
+    }
+
+    /**
+     * This problem could be solved with BigInteger/BigDecimal. But solved mathematically.
+     */
+    private static void fiftyThree() {
+        int count = 0;
+        for (int n = 1; n <= 100; n++) {
+            for (int r = 1; r <= n; r++) {
+                if (isNumberOfCombinationsExceedOneMillion(n, r)) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    private static boolean isNumberOfCombinationsExceedOneMillion(int n, int r) {
+        if (n == r) return false;
+        if (r > n - r) {
+            r = n - r;
+        }
+
+        double c = 1;
+        while (r > 0) {
+            c = c * n / r;
+            n--;
+            r--;
+            if (c > 1_000_000) return true;
+        }
+        return c > 1_000_000;
     }
 
     private static void sixtySeven() {

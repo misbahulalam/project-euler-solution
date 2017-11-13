@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author <a href="mailto:misbah@cefalo.com">Misbahul Alam Chowdhury</a> on Nov 06, 2017
+ * @author <a href="mailto:misbahulalam@gmail.com">Misbahul Alam Chowdhury</a> on Nov 06, 2017
  * @since 1.0
  */
 public class PentagonPair {

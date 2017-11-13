@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * @author <a href="mailto:misbah@cefalo.com">Misbahul Alam Chowdhury</a> on Nov 07, 2017
+ * @author <a href="mailto:misbahulalam@gmail.com">Misbahul Alam Chowdhury</a> on Nov 07, 2017
  * @since 1.0
  */
 @Data
