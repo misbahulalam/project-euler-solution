@@ -1,5 +1,6 @@
 package project.euler.util;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -324,6 +325,27 @@ public class NumberUtils {
             }
         }
         return true;
+    }
+
+    public static boolean isPalindrome(BigInteger x) {
+        return isPalindrome(x.toString());
+    }
+
+    public static boolean isLychrel(long x, int maxIterations) {
+        BigInteger v = BigInteger.valueOf(x);
+        for (int i = 0; i < maxIterations; i++) {
+            v = v.add(reverse(v));
+            if (isPalindrome(v)) return false;
+        }
+        return true;
+    }
+
+    private static BigInteger reverse(BigInteger x) {
+        return new BigInteger(reverse(x.toString()));
+    }
+
+    private static String reverse(String str) {
+        return new StringBuilder(str).reverse().toString();
     }
 
     public static String binary(int decimal) {

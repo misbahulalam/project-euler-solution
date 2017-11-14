@@ -19,7 +19,8 @@ public class FiftyOneToSeventyFive {
 //        fiftyOne();
 //        fiftyTwo();
 //        fiftyThree();
-        fiftyFour();
+//        fiftyFour();
+//        fiftyFive();
 //        sixtySeven();
     }
 
@@ -139,6 +140,11 @@ public class FiftyOneToSeventyFive {
             }
         }
         System.out.println(p1Wins);
+    }
+
+    private static void fiftyFive() {
+        long count = IntStream.range(1, 10_000).filter(x -> NumberUtils.isLychrel(x, 50)).count();
+        System.out.println(count);
     }
 
     private static void sixtySeven() {
