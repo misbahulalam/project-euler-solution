@@ -4,6 +4,7 @@ import project.euler.card.PokerHand;
 import project.euler.util.NumberUtils;
 import project.euler.util.ResourcesUtils;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +20,8 @@ public class FiftyOneToSeventyFive {
 //        fiftyOne();
 //        fiftyTwo();
 //        fiftyThree();
-        fiftyFour();
+//        fiftyFour();
+//        fiftySix();
 //        sixtySeven();
     }
 
@@ -139,6 +141,18 @@ public class FiftyOneToSeventyFive {
             }
         }
         System.out.println(p1Wins);
+    }
+
+    private static void fiftySix() {
+        int max = 0;
+        for (int aInt = 1; aInt < 100; aInt++) {
+            BigInteger a = BigInteger.valueOf(aInt);
+            for (int b = 1; b < 100; b++) {
+                int sum = NumberUtils.sumOfDigits(a.pow(b));
+                if (sum > max) max = sum;
+            }
+        }
+        System.out.println(max);
     }
 
     private static void sixtySeven() {
