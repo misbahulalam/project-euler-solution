@@ -1,5 +1,6 @@
 package project.euler.util;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -388,6 +389,18 @@ public class NumberUtils {
         }
 
         return true;
+    }
+
+    public static int sumOfDigits(BigDecimal x) {
+        return sumOfDigits(x.toString());
+    }
+
+    public static int sumOfDigits(BigInteger x) {
+        return sumOfDigits(x.toString());
+    }
+
+    private static int sumOfDigits(String s) {
+        return s.chars().map(c -> c - '0').sum();
     }
 
 }

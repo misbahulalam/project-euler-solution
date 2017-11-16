@@ -629,7 +629,7 @@ public class OneToTwentyFive {
 
     private static void twenty() {
         BigDecimal factorial = factorial(new BigDecimal(100));
-        System.out.println(sumOfDigits(factorial));
+        System.out.println(NumberUtils.sumOfDigits(factorial));
     }
 
     private static BigDecimal factorial(BigDecimal x) {
@@ -638,11 +638,6 @@ public class OneToTwentyFive {
         } else {
             return x.multiply(factorial(x.subtract(new BigDecimal(1))));
         }
-    }
-
-    private static int sumOfDigits(BigDecimal x) {
-        char[] chars = x.toString().toCharArray();
-        return Arrays.stream(ArrayUtils.toObject(chars)).mapToInt(Character::getNumericValue).sum();
     }
 
     private static void twentyOne() {
