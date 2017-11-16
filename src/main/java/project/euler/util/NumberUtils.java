@@ -181,16 +181,33 @@ public class NumberUtils {
     }
 
     public static LinkedHashSet<Integer> primesUpTo(int n) {
-        LinkedHashSet<Integer> primes = new LinkedHashSet<>();
-        primes.add(2);
-        int trying = 3;
-        while (trying <= n) {
-            if (isPrime(trying, primes)) {
-                primes.add(trying);
-            }
-            trying += 2;
-        }
+        LinkedHashSet<Integer> primes = new LinkedHashSet<>(n / 10);
+        primesUpToAsStream(n).forEach(primes::add);
+
         return primes;
+    }
+
+    public static int[] primesUpToAsArray(int n) {
+        return primesUpToAsStream(n).toArray();
+    }
+
+    private static IntStream primesUpToAsStream(int upTo) {
+        int sqrtN = (int) Math.sqrt(upTo);
+        boolean[] primes = new boolean[upTo];
+        Arrays.fill(primes, true);
+        primes[0] = false;
+
+        for (int pos = 1; pos < sqrtN; pos++) {
+            if (!primes[pos]) continue;
+            int val = pos + 1;
+
+            int comp = val + val;
+            while (comp <= upTo) {
+                primes[comp - 1] = false;
+                comp += val;
+            }
+        }
+        return IntStream.range(0, upTo).filter(p -> primes[p]).map(i -> i + 1);
     }
 
     public static Set<Integer> primesBetween(int from, int to) {
