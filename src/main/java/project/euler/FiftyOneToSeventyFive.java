@@ -23,6 +23,7 @@ public class FiftyOneToSeventyFive {
 //        fiftyFour();
 //        fiftyFive();
 //        fiftySix();
+//        fiftySeven();
 //        sixtySeven();
     }
 
@@ -160,6 +161,18 @@ public class FiftyOneToSeventyFive {
         System.out.println(max);
     }
 
+    private static void fiftySeven() {
+        BigInteger numerator = BigInteger.valueOf(3);
+        BigInteger denominator = BigInteger.valueOf(2);
+        int count = 0;
+
+        for (int i = 1; i <= 1000; i++) {
+            if (NumberUtils.digitCount(numerator) > NumberUtils.digitCount(denominator)) count++;
+            numerator = numerator.add(denominator).add(denominator);
+            denominator = numerator.subtract(denominator);
+        }
+        System.out.println(count);
+    }
     private static void sixtySeven() {
         String input = ResourcesUtils.readAsString("p067_triangle.txt");
         Integer[][] triangle = NumberUtils.parseTo2dIntegerArray(input);

@@ -323,6 +323,10 @@ public class NumberUtils {
         return number == 0 ? 0 : (int) (Math.log10(number) + 1);
     }
 
+    public static int digitCount(BigInteger number) {
+        return number.toString().length();
+    }
+
     public static boolean isPalindrome(String s) {
         char[] chars = s.toCharArray();
         int l = chars.length;
