@@ -24,6 +24,7 @@ public class FiftyOneToSeventyFive {
 //        fiftyFive();
 //        fiftySix();
 //        fiftySeven();
+//        fiftyEight();
 //        sixtySeven();
     }
 
@@ -173,6 +174,37 @@ public class FiftyOneToSeventyFive {
         }
         System.out.println(count);
     }
+
+    private static void fiftyEight() {
+        int preCalculatedPrimeLimit = 1000;
+        int[] primes = NumberUtils.primesUpToAsArray(preCalculatedPrimeLimit);
+
+        int value = 1;
+        int primeCount = 0;
+        int size = 1;
+        int diagonalNumberCount = size * 2 - 1;
+        float ratio = 100f * primeCount / diagonalNumberCount;
+
+        while (ratio == 0 || ratio >= 10) {
+            size += 2;
+
+            if (value + (size - 1) * 4 > preCalculatedPrimeLimit) {
+                preCalculatedPrimeLimit *= 100;
+                primes = NumberUtils.primesUpToAsArray(preCalculatedPrimeLimit);
+            }
+
+            for (int i = 1; i <= 4; i++) {
+                value += size - 1;
+                if (Arrays.binarySearch(primes, value) >= 0) primeCount++;
+            }
+
+            diagonalNumberCount = size * 2 - 1;
+            ratio = 100f * primeCount / diagonalNumberCount;
+        }
+
+        System.out.println(size);
+    }
+
     private static void sixtySeven() {
         String input = ResourcesUtils.readAsString("p067_triangle.txt");
         Integer[][] triangle = NumberUtils.parseTo2dIntegerArray(input);
