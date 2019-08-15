@@ -25,6 +25,7 @@ public class FiftyOneToSeventyFive {
 //        fiftySix();
 //        fiftySeven();
 //        fiftyEight();
+        sixtyOne();
 //        sixtySeven();
     }
 
@@ -46,7 +47,7 @@ public class FiftyOneToSeventyFive {
         }
     }
 
-    private static void fiftyTwo () {
+    private static void fiftyTwo() {
         int x = 1;
         while (true) {
             int[] digits = NumberUtils.digits(x);
@@ -150,6 +151,7 @@ public class FiftyOneToSeventyFive {
         long count = IntStream.range(1, 10_000).filter(x -> NumberUtils.isLychrel(x, 50)).count();
         System.out.println(count);
     }
+
     private static void fiftySix() {
         int max = 0;
         for (int aInt = 1; aInt < 100; aInt++) {
@@ -203,6 +205,10 @@ public class FiftyOneToSeventyFive {
         }
 
         System.out.println(size);
+    }
+
+    private static void sixtyOne() {
+
     }
 
     private static void sixtySeven() {

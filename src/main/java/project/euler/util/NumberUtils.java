@@ -113,9 +113,25 @@ public class NumberUtils {
         return Arrays.stream(str.split(" ")).map(Integer::parseInt).toArray(Integer[]::new);
     }
 
-    public static int max(Integer... numbers) {
+    public static int max(Integer[] numbers) {
         int max = Integer.MIN_VALUE;
         for (int val : numbers) {
+            max = Math.max(max, val);
+        }
+        return max;
+    }
+
+    public static int max(int... numbers) {
+        int max = Integer.MIN_VALUE;
+        for (int val : numbers) {
+            max = Math.max(max, val);
+        }
+        return max;
+    }
+
+    public static double max(double... numbers) {
+        double max = Double.MIN_VALUE;
+        for (double val : numbers) {
             max = Math.max(max, val);
         }
         return max;
@@ -124,6 +140,14 @@ public class NumberUtils {
     public static long min(long... numbers) {
         long min = Long.MAX_VALUE;
         for (long val : numbers) {
+            min = Math.min(min, val);
+        }
+        return min;
+    }
+
+    public static double min(double... numbers) {
+        double min = Double.MAX_VALUE;
+        for (double val : numbers) {
             min = Math.min(min, val);
         }
         return min;
@@ -422,6 +446,95 @@ public class NumberUtils {
 
     private static int sumOfDigits(String s) {
         return s.chars().map(c -> c - '0').sum();
+    }
+
+    public static int[] triangleNumbersBetween(int start, int end) {
+        //Tn = n(n+1)/2
+        // n^2 + n - 2 * Tn = 0
+
+        //The solution of quadratic equation a x^2 + b x + c = 0 is, (-b +- sqrt(b^2 - 4ac))/2a
+        //Here, a = 1; b = 1, c = -2 * Tn
+        //So, n = (sqrt(1 + 8 * Tn) -1) / 2
+
+        double[] nStart = quadraticEquationRoots(1, 1, -2 * start);
+        double[] nEnd = quadraticEquationRoots(1, 1, -2 * end);
+
+        int nMin = (int) min(nStart);
+        int nMax = (int) Math.ceil(max(nEnd));
+
+        return IntStream.rangeClosed(nMin, nMax).map(n -> n * (n + 1) / 2).filter(v -> v >= start && v <= end).toArray();
+    }
+
+    public static int[] squareNumbersBetween(int start, int end) {
+        //Sn = n^2
+        //So, n = sqrt(n)
+
+        int nMin = (int) Math.sqrt(start);
+        int nMax = (int) Math.ceil(Math.sqrt(end));
+
+        return IntStream.rangeClosed(nMin, nMax).map(n -> n * n).filter(v -> v >= start && v <= end).toArray();
+    }
+
+    public static int[] pentagonalNumbersBetween(int start, int end) {
+        //Pn = n(3n−1)/2
+        //3 n ^ 2 - n - 2 Pn = 0
+        //It's a quadratic equation with a = 3, b = -1, c = -2 * Pn
+        double[] nStart = quadraticEquationRoots(3, -1, -2 * start);
+        double[] nEnd = quadraticEquationRoots(3, -1, -2 * end);
+
+        int nMin = (int) min(nStart);
+        int nMax = (int) Math.ceil(max(nEnd));
+
+        return IntStream.rangeClosed(nMin, nMax).map(n -> n * (3 * n - 1) / 2).filter(v -> v >= start && v <= end).toArray();
+
+    }
+
+    public static int[] hexagonalNumbersBetween(int start, int end) {
+        //Hn = n(2n - 1)
+        // 2 n^2 - n - Hn = 0
+        //It's a quadratic equation with a = 2, b = -1, c = -Hn
+
+        double[] nStart = quadraticEquationRoots(2, -1, -1 * start);
+        double[] nEnd = quadraticEquationRoots(2, -1, -1 * end);
+
+        int nMin = (int) min(nStart);
+        int nMax = (int) Math.ceil(max(nEnd));
+
+        return IntStream.rangeClosed(nMin, nMax).map(n -> 2 * n * n - n).filter(v -> v >= start && v <= end).toArray();
+    }
+
+    public static int[] heptagonalNumbersBetween(int start, int end) {
+        //Hn = n(5n−3)/2
+        // 5 n^2 - 3n - 2Hn = 0
+        //It's a quadratic equation with a = 5, b = -3, c = -2 * Hn
+
+        double[] nStart = quadraticEquationRoots(5, -3, -2 * start);
+        double[] nEnd = quadraticEquationRoots(5, -3, -2 * end);
+
+        int nMin = (int) min(nStart);
+        int nMax = (int) Math.ceil(max(nEnd));
+
+        return IntStream.rangeClosed(nMin, nMax).map(n -> n * (5 * n - 3) / 2).filter(v -> v >= start && v <= end).toArray();
+    }
+
+    public static int[] octagonalNumbersBetween(int start, int end) {
+        //On = n(3n−2)
+        // 3 n^2 - 2n - On = 0
+        //It's a quadratic equation with a = 3, b = -2, c = -On
+
+        double[] nStart = quadraticEquationRoots(3, -2, -1 * start);
+        double[] nEnd = quadraticEquationRoots(3, -2, -1 * end);
+
+        int nMin = (int) min(nStart);
+        int nMax = (int) Math.ceil(max(nEnd));
+
+        return IntStream.rangeClosed(nMin, nMax).map(n -> n * (3 * n - 2)).filter(v -> v >= start && v <= end).toArray();
+    }
+
+    public static double[] quadraticEquationRoots(int a, int b, int c) {
+        //x = (-b +- sqrt(b^2 -4ac))/2a
+        double sqrt = Math.sqrt(b * b - 4 * a * c);
+        return new double[]{(-b + sqrt) / 2 / a, (-b - sqrt) / 2 / a};
     }
 
 }
